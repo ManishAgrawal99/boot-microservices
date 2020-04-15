@@ -1,6 +1,5 @@
 package com.example.demo.resources;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.example.demo.models.CatalogItem;
 import com.example.demo.models.Movie;
-import com.example.demo.models.Rating;
+import com.example.demo.models.UserRating;
 
 @RestController
 @RequestMapping("/catalog")
@@ -34,20 +33,19 @@ public class movieCatalogResource {
 		
 		
 		//Get All rated movie IDs
-		List<Rating> ratings = Arrays.asList(
-			new Rating("1234", 4),
-			new Rating("1235", 3)
-		);
+		UserRating ratings = restTemplate.getForObject("http://localhost:8083/ratings/users/" + userId, UserRating.class);
 		
-		return ratings.stream().map(rating -> {
-			//Movie movie = restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), Movie.class);
+		return ratings.getUserRatings().stream().map(rating -> {
+			Movie movie = restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), Movie.class);
 			
+			/**
 			Movie movie = webClientBuilder.build()
 							.get()
 							.uri("http://localhost:8082/movies/"+rating.getMovieId())
 							.retrieve()
 							.bodyToMono(Movie.class)
 							.block();
+			*/
 			
 			return new CatalogItem(movie.getName() , "Desc", rating.getRating());
 		})
