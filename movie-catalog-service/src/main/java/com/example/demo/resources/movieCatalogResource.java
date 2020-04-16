@@ -47,7 +47,7 @@ public class movieCatalogResource {
 							.block();
 			*/
 			
-			return new CatalogItem(movie.getName() , "Desc", rating.getRating());
+			return new CatalogItem(movie.getName() , movie.getDescription(), rating.getRating());
 		})
 		.collect(Collectors.toList());
 		
