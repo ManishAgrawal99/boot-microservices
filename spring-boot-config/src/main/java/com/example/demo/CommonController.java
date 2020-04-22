@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,8 +22,18 @@ public class CommonController {
 	private DbSettings dbSettings;
 	
 	
+	@Autowired
+	private Environment env;
+	
+	
 	@GetMapping("/greeting")
 	public String greeting() {
 		return greetingMessage + " " + dbSettings.getConnection() + " " + dbSettings.getHost()+":" + dbSettings.getPort();
+	}
+	
+	@GetMapping("/env")
+	public String getEnv() {
+		
+		return env.toString();
 	}
 }
