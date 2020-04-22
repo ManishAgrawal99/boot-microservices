@@ -1,0 +1,13 @@
+my.greeting: Hello
+
+app:
+    name: Test App
+    description: Welcome to ${app.name}
+
+
+db:
+    connection: "Test Connection String"
+    host: 127.0.0.1
+    port: 1200
+
+management.endpoints.web.exposure.include: "*"
