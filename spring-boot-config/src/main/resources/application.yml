@@ -17,3 +17,7 @@ management.endpoints.web.exposure.include: "*"
 #      test
 
 spring.cloud.config.uri: http://localhost:8888
+
+spring:
+  application:
+    name: spring-boot-config
